@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script type="module" src="/src/main.ts"></script>
+  <link rel="stylesheet" href="/src/style.css">
+  <title>Vite + TS</title>
+</head>
+
+<body>
+  <h1>プロジェクト管理</h1>
+  <template id="project-input" class="js-project-form">
+    <form id="user-input">
+      <div class="form-control">
+        <label for="title">タイトル</label>
+        <input type="text" id="title" />
+      </div>
+      <div class="form-control">
+        <label for="description">説明</label>
+        <textarea id="description" rows="3"></textarea>
+      </div>
+      <div class="form-control">
+        <label for="manday">人日</label>
+        <input type="number" id="manday" step="1" min="0" max="10000" />
+      </div>
+      <button type="submit">プロジェクト追加</button>
+    </form>
+  </template>
+  <template id="single-project">
+    <li></li>
+  </template>
+  <template id="project-list">
+    <section class="projects">
+      <header>
+        <h2></h2>
+      </header>
+      <ul></ul>
+    </section>
+  </template>
+  <div id="app" class="js-app"></div>
+</body>
+
+</html>
