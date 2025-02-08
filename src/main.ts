@@ -49,14 +49,43 @@ class ProjectInput {
     this.attach();
   }
 
-  private configure() {
-    this.element.addEventListener("submit", this.submitHandler);
+  private gatherUserInput(): [string, string, number] | void {
+    const enteredTitle = this.titleInputElement.value;
+    const enteredDescription = this.descriptionInputElement.value;
+    const enteredManDay = this.manDayInputElement.value;
+
+    if (
+      enteredTitle.trim().length === 0 ||
+      enteredDescription.trim().length === 0 ||
+      enteredManDay.trim().length === 0
+    ) {
+      alert("入力値が正しくありません。再度お試しください");
+      return;
+    }
+
+    return [enteredTitle, enteredDescription, Number(enteredManDay)];
+  }
+
+  private clearInputs() {
+    this.titleInputElement.value = "";
+    this.descriptionInputElement.value = "";
+    this.manDayInputElement.value = "";
   }
 
   @autoBind
   private submitHandler(event: Event) {
     event.preventDefault();
-    console.log(this.titleInputElement.value);
+    const userInput = this.gatherUserInput();
+    if (Array.isArray(userInput)) {
+      const [title, description, manDay] = userInput;
+      console.log(title, description, manDay);
+    }
+
+    this.clearInputs();
+  }
+
+  private configure() {
+    this.element.addEventListener("submit", this.submitHandler);
   }
 
   private attach() {
