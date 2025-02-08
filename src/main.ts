@@ -68,33 +68,39 @@ new ProjectInput();
 
 // ---
 
-// function Logger(log: string) {
-//   return function (constructor: Function) {
-//     console.log(log);
-//     console.log(constructor);
-//   };
-// }
+function Logger(log: string) {
+  return function (constructor: Function) {
+    console.log(log);
+    console.log(constructor);
+  };
+}
 
-// function WithTemplate(template: string, hookId: string) {
-//   return function (constructor: any) {
-//     console.log("テンプレートを表示");
-//     const hookEL = document.querySelector(hookId);
-//     const p = new constructor();
-//     if (hookEL) {
-//       hookEL.innerHTML = template;
-//       hookEL.querySelector("p")!.textContent = p.name;
-//     }
-//   };
-// }
-// @Logger("ログ出力中")
-// @WithTemplate("<p>サンプル</p>", ".js-hoge")
-// class Person {
-//   name = "Max";
+function WithTemplate(template: string, hookId: string) {
+  return function <T extends { new (...args: any[]): { name: string } }>(
+    originalConstructor: T
+  ) {
+    return class extends originalConstructor {
+      constructor(..._: any[]) {
+        super();
+        console.log("テンプレートを表示");
+        const hookEL = document.querySelector(hookId);
+        if (hookEL) {
+          hookEL.innerHTML = template;
+          hookEL.querySelector("p")!.textContent = this.name;
+        }
+      }
+    };
+  };
+}
+@Logger("ログ出力中")
+@WithTemplate("<p>サンプル</p>", ".js-hoge")
+class Person {
+  name = "Max";
 
-//   constructor() {
-//     console.log("Personオブジェクトを作成中");
-//   }
-// }
+  constructor() {
+    console.log("Personオブジェクトを作成中");
+  }
+}
 
 // const pers = new Person();
 
