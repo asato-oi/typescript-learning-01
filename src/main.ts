@@ -68,39 +68,39 @@ new ProjectInput();
 
 // ---
 
-function Logger(log: string) {
-  return function (constructor: Function) {
-    console.log(log);
-    console.log(constructor);
-  };
-}
+// function Logger(log: string) {
+//   return function (constructor: Function) {
+//     console.log(log);
+//     console.log(constructor);
+//   };
+// }
 
-function WithTemplate(template: string, hookId: string) {
-  return function <T extends { new (...args: any[]): { name: string } }>(
-    originalConstructor: T
-  ) {
-    return class extends originalConstructor {
-      constructor(..._: any[]) {
-        super();
-        console.log("テンプレートを表示");
-        const hookEL = document.querySelector(hookId);
-        if (hookEL) {
-          hookEL.innerHTML = template;
-          hookEL.querySelector("p")!.textContent = this.name;
-        }
-      }
-    };
-  };
-}
-@Logger("ログ出力中")
-@WithTemplate("<p>サンプル</p>", ".js-hoge")
-class Person {
-  name = "Max";
+// function WithTemplate(template: string, hookId: string) {
+//   return function <T extends { new (...args: any[]): { name: string } }>(
+//     originalConstructor: T
+//   ) {
+//     return class extends originalConstructor {
+//       constructor(..._: any[]) {
+//         super();
+//         console.log("テンプレートを表示");
+//         const hookEL = document.querySelector(hookId);
+//         if (hookEL) {
+//           hookEL.innerHTML = template;
+//           hookEL.querySelector("p")!.textContent = this.name;
+//         }
+//       }
+//     };
+//   };
+// }
+// @Logger("ログ出力中")
+// @WithTemplate("<p>サンプル</p>", ".js-hoge")
+// class Person {
+//   name = "Max";
 
-  constructor() {
-    console.log("Personオブジェクトを作成中");
-  }
-}
+//   constructor() {
+//     console.log("Personオブジェクトを作成中");
+//   }
+// }
 
 // const pers = new Person();
 
@@ -108,83 +108,83 @@ class Person {
 
 // ---
 
-// デコレータ関数は、クラスが定義されたタイミングで実行がされる
-/**
- * Propertyのデコーレータ関数のサンプル。
- * @param target クラスのプロトタイプが渡される。｜static propertyの場合はコンストラクターが渡される
- * @param propertyName プロパティのキー名
- */
-function Log(target: any, propertyName: string | Symbol) {
-  console.log("Property デコレータ");
-  console.log(target, propertyName);
-}
+// // デコレータ関数は、クラスが定義されたタイミングで実行がされる
+// /**
+//  * Propertyのデコーレータ関数のサンプル。
+//  * @param target クラスのプロトタイプが渡される。｜static propertyの場合はコンストラクターが渡される
+//  * @param propertyName プロパティのキー名
+//  */
+// function Log(target: any, propertyName: string | Symbol) {
+//   console.log("Property デコレータ");
+//   console.log(target, propertyName);
+// }
 
-/**
- * Accessorのデコーレータ関数のサンプル。
- * @param target クラスのプロトタイプが渡される。
- * @param name Accessorのメソッド名
- * @param descriptor PropertyDescriptor <https://qiita.com/hosomichi/items/db5c501272b622fdd848>
- */
-function Log2(target: any, name: string, descriptor: PropertyDescriptor) {
-  console.log("Accessor デコレータ");
-  console.log(target);
-  console.log(name);
-  console.log(descriptor);
-}
+// /**
+//  * Accessorのデコーレータ関数のサンプル。
+//  * @param target クラスのプロトタイプが渡される。
+//  * @param name Accessorのメソッド名
+//  * @param descriptor PropertyDescriptor <https://qiita.com/hosomichi/items/db5c501272b622fdd848>
+//  */
+// function Log2(target: any, name: string, descriptor: PropertyDescriptor) {
+//   console.log("Accessor デコレータ");
+//   console.log(target);
+//   console.log(name);
+//   console.log(descriptor);
+// }
 
-/**
- * methodのデコーレータ関数のサンプル。
- * @param target クラスのプロトタイプが渡される。｜static propertyの場合はコンストラクターが渡される
- * @param methodName メソッド名
- * @param descriptor PropertyDescriptor
- */
-function Log3(
-  target: any,
-  methodName: string | Symbol,
-  descriptor: PropertyDescriptor
-) {
-  console.log("method デコレータ");
-  console.log(target);
-  console.log(methodName);
-  console.log(descriptor);
-}
+// /**
+//  * methodのデコーレータ関数のサンプル。
+//  * @param target クラスのプロトタイプが渡される。｜static propertyの場合はコンストラクターが渡される
+//  * @param methodName メソッド名
+//  * @param descriptor PropertyDescriptor
+//  */
+// function Log3(
+//   target: any,
+//   methodName: string | Symbol,
+//   descriptor: PropertyDescriptor
+// ) {
+//   console.log("method デコレータ");
+//   console.log(target);
+//   console.log(methodName);
+//   console.log(descriptor);
+// }
 
-/**
- * parameter デコレータ関数のサンプル
- * @param target クラスのプロトタイプが渡される。｜static propertyの場合はコンストラクターが渡される
- * @param methodName そのパラメータを引数としているメソッド名
- * @param position 引数の位置
- */
-function Log4(target: any, methodName: string | Symbol, position: number) {
-  console.log("Parameter デコレータ");
-  console.log(target);
-  console.log(methodName);
-  console.log(position);
-}
+// /**
+//  * parameter デコレータ関数のサンプル
+//  * @param target クラスのプロトタイプが渡される。｜static propertyの場合はコンストラクターが渡される
+//  * @param methodName そのパラメータを引数としているメソッド名
+//  * @param position 引数の位置
+//  */
+// function Log4(target: any, methodName: string | Symbol, position: number) {
+//   console.log("Parameter デコレータ");
+//   console.log(target);
+//   console.log(methodName);
+//   console.log(position);
+// }
 
-class Product {
-  @Log
-  title: string;
-  private _price: number;
+// class Product {
+//   @Log
+//   title: string;
+//   private _price: number;
 
-  constructor(t: string, p: number) {
-    this.title = t;
-    this._price = p;
-  }
+//   constructor(t: string, p: number) {
+//     this.title = t;
+//     this._price = p;
+//   }
 
-  @Log2
-  set price(val: number) {
-    if (val > 0) {
-      this._price = val;
+//   @Log2
+//   set price(val: number) {
+//     if (val > 0) {
+//       this._price = val;
 
-      return;
-    }
+//       return;
+//     }
 
-    throw new Error("不正な値です。0以下は設定できません。");
-  }
+//     throw new Error("不正な値です。0以下は設定できません。");
+//   }
 
-  @Log3
-  getPriceWithTax(@Log4 tax: number) {
-    return this._price * (1 + tax);
-  }
-}
+//   @Log3
+//   getPriceWithTax(@Log4 tax: number) {
+//     return this._price * (1 + tax);
+//   }
+// }
