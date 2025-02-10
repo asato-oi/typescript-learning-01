@@ -60,6 +60,42 @@ function autoBind(_: any, _2: string, descriptor: PropertyDescriptor) {
   return adjDescriptor;
 }
 
+class ProjectList {
+  private SELECTOR = {
+    selectorApp: ".js-app",
+    selectorList: ".js-project-list",
+  };
+
+  templateElement: HTMLTemplateElement;
+  hostElement: HTMLDivElement;
+  element: HTMLElement;
+
+  constructor(private type: "active" | "finished") {
+    this.templateElement = document.querySelector(this.SELECTOR.selectorList)!;
+    this.hostElement = document.querySelector(this.SELECTOR.selectorApp)!;
+
+    const importedNode = document.importNode(
+      this.templateElement.content,
+      true
+    );
+    this.element = importedNode.firstElementChild as HTMLElement;
+    this.element.id = `${this.type}-projects`;
+    this.attach();
+    this.renderContent();
+  }
+
+  private renderContent() {
+    const contentId = `${this.type}-content`;
+    this.element.querySelector(".js-project-content")!.id = contentId;
+    this.element.querySelector(".js-project-head")!.textContent =
+      this.type === "active" ? "実行中" : "完了";
+  }
+
+  private attach() {
+    this.hostElement.insertAdjacentElement("beforeend", this.element);
+  }
+}
+
 class ProjectInput {
   private SELECTOR = {
     selectorApp: ".js-app",
@@ -160,7 +196,10 @@ class ProjectInput {
   }
 }
 
-new ProjectInput();
+const projectInput = new ProjectInput();
+
+const activeProjectList = new ProjectList("active");
+const finishedProjectList = new ProjectList("finished");
 
 // ---
 
