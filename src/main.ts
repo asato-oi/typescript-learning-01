@@ -159,6 +159,34 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
   }
 }
 
+class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
+  private project: Project;
+
+  get manDay() {
+    if (this.project.manDay < 20) {
+      return this.project.manDay.toString + "人日";
+    } else {
+      return (this.project.manDay / 20).toString() + "人月";
+    }
+  }
+
+  constructor(hostId: string, project: Project) {
+    super(".js-project-item", hostId, false, project.id);
+    this.project = project;
+
+    this.configure();
+    this.renderContent();
+  }
+
+  configure(): void {}
+
+  renderContent(): void {
+    this.element.querySelector("h2")!.textContent = this.project.title;
+    this.element.querySelector("h3")!.textContent = this.manDay;
+    this.element.querySelector("p")!.textContent = this.project.description;
+  }
+}
+
 class ProjectList extends Component<HTMLDivElement, HTMLElement> {
   assignedProjects: Project[] = [];
 
@@ -198,9 +226,7 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
     listEl.innerHTML = "";
 
     for (const projectItem of this.assignedProjects) {
-      const listItem = document.createElement("li");
-      listItem.textContent = projectItem.title;
-      listEl.appendChild(listItem);
+      new ProjectItem(`#${listEl.id}`, projectItem);
     }
   }
 }
